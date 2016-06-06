@@ -15,9 +15,11 @@ import java.util.ArrayList;
 public class Entity {
     private String name;
     private static int serial;
+    private int thisSerial;
     private Activity arrival;
     private Activity serviceTime;
-    private ArrayList<Activity> attributes;
+    private Activity timeout;
+    //private ArrayList<Activity> attributes;
     //Attributes 1-n
     //the thought occurs we could easily run out of memory - check jvm
     //SIMPY TYPE experiment
@@ -26,9 +28,11 @@ public class Entity {
     public Entity(String name){
         this.name = name + " " + serial;
         serial++;
+        thisSerial = serial;
         arrival = new Activity();
         serviceTime = new Activity();
-        attributes = new ArrayList<>();
+        timeout = new Activity();
+        //attributes = new ArrayList<>();
     }
     
     
@@ -61,20 +65,33 @@ public class Entity {
         serviceTime.trigger();
     }
     
-    public void addAttribute(Activity a){
-        attributes.add(a);
+    public int getTimeOut(){
+        return this.timeout.getValue();
     }
     
-    public int getNextAttribute(){
-        return attributes.get(0).getValue();
+    public void setTimeOut(int timeout){
+        this.timeout.setValue(timeout);
     }
+    
+    public void startTimeout(){
+        timeout.trigger();
+        timeout.process();
+    }
+    
+    public void addAttribute(Activity a){
+        //attributes.add(a);
+    }
+    
+    //public int getNextAttribute(){
+        //return attributes.get(0).getValue();
+    //}
     
     public void processAttribute(){
-        attributes.remove(0);
+        //attributes.remove(0);
     }
     
     public int getSerial(){
-        return serial;
+        return thisSerial;
     }
 
 }

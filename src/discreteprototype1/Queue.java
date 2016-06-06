@@ -8,14 +8,13 @@ package discreteprototype1;
 import java.util.ArrayList;
 
 /**
- *
+ * a FIFO queue
  * @author Jack L. Clements
  */
 public class Queue {
     
-    private ArrayList<Entity> queue;
-    private Entity nextEvent; 
-    Resource res1;
+    protected ArrayList<Entity> queue;
+    protected Resource res1;
     //private boolean isServing;
 
     public Queue() {
@@ -23,31 +22,19 @@ public class Queue {
     }
     
     public void addEntity(Entity ent){
-        if(queue.isEmpty()){
-            nextEvent = ent;
-        }
-        else{
-            queue.add(ent);
-        }
+        queue.add(ent);
     }
     
     public Entity getHead(){
-        return nextEvent;
+        return queue.get(0);
     }
     
     public void process(){
-        if(!queue.isEmpty()){
-            nextEvent = queue.get(0);
-            queue.remove(0);
-        }
-        else{
-            nextEvent = null;
-        }
-        
+        queue.remove(0);
     }
     
     public boolean isEmpty(){
-        if(queue.isEmpty() && nextEvent == null){
+        if(queue.isEmpty()){
             return true;
        }
         else{
@@ -59,8 +46,12 @@ public class Queue {
         return queue.size();
     }
     
-    public int timeAt(int i){
-        return queue.get(i).getNextAttribute();
+    public int getNextEOS(){
+        return queue.get(0).getService();
     }
+    
+    //public int timeAt(int i){
+    //    return queue.get(i).getNextAttribute();
+    //}
     
 }

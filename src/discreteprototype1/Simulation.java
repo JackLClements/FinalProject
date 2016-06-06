@@ -11,30 +11,24 @@ import java.util.Random;
  */
 public class Simulation {
 
-    private int worldClock;
+    private static int worldClock;
     private long seed;
     private Random rng;
     private Queue queue; //start with just the one
-    private Entity currentEv;
-
-    //list of events?
-    private ArrayList<Entity> events;
+    private Resource res;
 
     //variables for task
     private int nextEOS;
     private int nextArrival;
-    private int nextEtc;
 
     public Simulation() {
         worldClock = 0;
         queue = new Queue();
-        currentEv = null;
         seed = System.currentTimeMillis();
         rng = new Random(seed);
-        events = new ArrayList<>();
     }
 
-    public int getTime() {
+    public static int getTime() {
         return worldClock;
     }
 
@@ -43,7 +37,7 @@ public class Simulation {
     }
 
     public Entity getCurrentEv() {
-        return currentEv;
+        return queue.getHead();
     }
 
     /**
@@ -75,25 +69,6 @@ public class Simulation {
 
     public void determineCurrentAct() {
         /*
-        Relevant things to consider when determining activity
-        - Next EOS of each queue
-        - Next arrival into the system, globally
-        - Next other event
-         */
-
-        //Determine next non-arrival/eos activity
-        /*
-        int nextActivity = queue.timeAt(0);
-        int nextActLoc = 0; //stores location for removal
-        for(int i = 1; i < queue.size(); i++){
-            if(queue.timeAt(i) < nextActivity){
-                nextActivity = queue.timeAt(i);
-                nextActLoc = i;
-            }
-        }*/
-        //update world values
-        //nextEtc = nextActivity;
-        //if
         if (nextEOS > 0 && nextArrival > 0) { //check value to stop looping forever
             if (nextEOS < nextArrival) {
                 worldClock = nextEOS;
@@ -119,7 +94,7 @@ public class Simulation {
                     //queue.process();
                 }
             }
-        }
+        }*/
     }
 
     public void step() {
@@ -148,14 +123,11 @@ public class Simulation {
     }
 
     public void addEntity(Entity ent) {
-        if (currentEv == null) {
-            currentEv = ent;
-            nextArrival = ent.getArrival();
-            nextEOS = ent.getArrival() + ent.getService();
-            System.out.println(nextEOS);
-        } else {
-            queue.addEntity(ent);
-        }
+            //nextArrival = ent.getArrival();
+            //nextEOS = ent.getArrival() + ent.getService();
+            //System.out.println(nextEOS);
+            //queue.addEntity(ent);
+        
     }
 
 }
