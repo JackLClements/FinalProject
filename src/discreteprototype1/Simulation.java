@@ -127,7 +127,7 @@ public class Simulation {
             //nextEOS = ent.getArrival() + ent.getService();
             //System.out.println(nextEOS);
             //queue.addEntity(ent);
-        
+        //nothing here yet
     }
 
 }
