@@ -21,6 +21,11 @@ public class Activity {
         state = states.NOT_TRIGGERED;
     }
     
+    public Activity(int value){
+        this.value = value;
+        state = states.NOT_TRIGGERED;
+    }
+    
     public void setValue(int value){
         this.value = value;
     }

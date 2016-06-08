@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package discreteprototype1;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
  * @author Jack L. Clements
  */
-public class Entity {
+public class Entity implements Comparable<Entity>{
     private String name;
     private static int serial;
     private int thisSerial;
@@ -32,6 +27,16 @@ public class Entity {
         arrival = new Activity();
         serviceTime = new Activity();
         timeout = new Activity();
+        //attributes = new ArrayList<>();
+    }
+    
+    public Entity(String name, Activity arrival, Activity serviceTime, Activity timeout){
+        this.name = name + " " + serial;
+        serial++;
+        thisSerial = serial;
+        this.arrival = arrival;
+        this.serviceTime = serviceTime;
+        this.timeout = timeout;
         //attributes = new ArrayList<>();
     }
     
@@ -93,5 +98,20 @@ public class Entity {
     public int getSerial(){
         return thisSerial;
     }
+
+    @Override
+    public int compareTo(Entity t) {
+        if(t.getArrival() > arrival.getValue()){
+            return -1;
+        }
+        else if(t.getArrival() == arrival.getValue()){
+            return 0;
+        }
+        else{
+            return 1;
+        }
+    }
+    
+    
 
 }

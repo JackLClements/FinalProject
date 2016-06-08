@@ -15,8 +15,12 @@ public class DiscretePrototype1 {
         Simulation sim1 = new Simulation();
         Generator gen = new Generator();
         Random rng = new Random();
-        sim1.addEntity(gen.generateEntity(200, rng));
-        sim1.addEntity(gen.generateEntity(210, rng));
+        Activity arrival1 = new Activity(30);
+        Activity arrival2 = new Activity(20);
+        Activity serviceTime = new Activity(100);
+        Activity timeOut = new Activity(500);
+        sim1.addEntity(new Entity("Customer", arrival1, serviceTime, timeOut));
+        sim1.addEntity(new Entity("Customer 2 ", arrival2, serviceTime, timeOut));
         sim1.run(300);
     }
     

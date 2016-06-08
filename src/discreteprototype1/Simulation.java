@@ -1,6 +1,8 @@
 package discreteprototype1;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -14,10 +16,12 @@ public class Simulation {
     private static int worldClock;
     private long seed;
     private Random rng;
-    private Queue queue; //start with just the one
+    //start with just the one
     private Resource res;
 
     //variables for task
+    private Queue queue;
+    private Arrivals arrivals;
     private int nextEOS;
     private int nextArrival;
 
@@ -26,6 +30,7 @@ public class Simulation {
         queue = new Queue();
         seed = System.currentTimeMillis();
         rng = new Random(seed);
+        arrivals = new Arrivals();
     }
 
     public static int getTime() {
@@ -68,6 +73,18 @@ public class Simulation {
     }
 
     public void determineCurrentAct() {
+        nextArrival = arrivals.nextArrival();
+        System.out.println("Next Arrival - " + nextArrival);
+        arrivals.processArrival();
+        /*
+        if (nextEOS > 0 && nextArrival > 0) {
+            if (nextEOS < nextArrival) {
+                worldClock = nextEOS;
+                if (!queue.isEmpty()) {
+
+                }
+            }
+        }*/
         /*
         if (nextEOS > 0 && nextArrival > 0) { //check value to stop looping forever
             if (nextEOS < nextArrival) {
@@ -121,13 +138,18 @@ public class Simulation {
             queue.addEntity(newEnt);
         }
     }
+    
+    
 
     public void addEntity(Entity ent) {
-            //nextArrival = ent.getArrival();
-            //nextEOS = ent.getArrival() + ent.getService();
-            //System.out.println(nextEOS);
-            //queue.addEntity(ent);
-        //nothing here yet
+        arrivals.addArrival(ent);
+        
+        //nextArrival = ent.getArrival();
+        //nextEOS = ent.getArrival() + ent.getService();
+        //System.out.println(nextEOS);
+        //queue.addEntity(ent);
+        //nothing here 
     }
 
+   
 }
