@@ -63,6 +63,8 @@ public class Simulation {
     }
 
     public void run(int time) {
+        nextArrival = arrivals.nextArrival();
+        nextEOS = nextArrival + arrivals.getServiceTime();
         while (worldClock < time) {
             step();
         }
@@ -73,9 +75,37 @@ public class Simulation {
     }
 
     public void determineCurrentAct() {
-        nextArrival = arrivals.nextArrival();
-        System.out.println("Next Arrival - " + nextArrival);
-        arrivals.processArrival();
+        //nextArrival = arrivals.nextArrival();
+        //System.out.println(nextArrival);
+        //System.out.println(nextEOS);
+        //determine next event
+        //if (nextArrival > 0 && nextEOS > 0) {
+            if ((nextArrival < nextEOS) && (nextArrival > 0) ) { //arrival event
+                //System.out.println(nextArrival + " IS LESS THAN " + nextEOS + " THUS ARRIVAL");
+                worldClock = nextArrival;
+                if(queue.isEmpty()){
+                    nextEOS = worldClock + arrivals.getServiceTime();
+                }
+                System.out.println("ARRIVAL EVENT " + arrivals.getSerial() + " at " + worldClock);
+                queue.addEntity(arrivals.processArrival());
+            } else if ((nextEOS < nextArrival) || ((nextArrival == 0) && (nextEOS > 0))) { //eos event
+                //System.out.println(nextEOS + " IS LESS THAN " + nextArrival + " THUS EOS");
+                worldClock = nextEOS;
+                queue.process();
+                if(queue.getNextEOS() == 0){
+                    nextEOS = worldClock + arrivals.getServiceTime();
+                }
+                else{
+                    nextEOS = worldClock + queue.getNextEOS();
+                }  
+                System.out.println("EOS EVENT BY " + arrivals.getSerial() + " at " + worldClock);
+                
+            }
+            nextArrival = arrivals.nextArrival();
+            //System.out.println("WORLD CLOCK " + worldClock);
+            //System.out.println("NEXT ARRIVAL " + nextArrival);
+            //System.out.println("NEXT EOS " + nextEOS);
+        //}
         /*
         if (nextEOS > 0 && nextArrival > 0) {
             if (nextEOS < nextArrival) {
@@ -85,7 +115,7 @@ public class Simulation {
                 }
             }
         }*/
-        /*
+ /*
         if (nextEOS > 0 && nextArrival > 0) { //check value to stop looping forever
             if (nextEOS < nextArrival) {
                 worldClock = nextEOS;
@@ -138,12 +168,16 @@ public class Simulation {
             queue.addEntity(newEnt);
         }
     }
-    
-    
 
     public void addEntity(Entity ent) {
         arrivals.addArrival(ent);
-        
+        /*
+        if (queue.isEmpty()) {
+            queue.addEntity(arrivals.processArrival());
+            if (nextEOS == 0) {
+                nextEOS = worldClock + queue.getNextEOS();
+            }
+        }*/
         //nextArrival = ent.getArrival();
         //nextEOS = ent.getArrival() + ent.getService();
         //System.out.println(nextEOS);
@@ -151,5 +185,4 @@ public class Simulation {
         //nothing here 
     }
 
-   
 }

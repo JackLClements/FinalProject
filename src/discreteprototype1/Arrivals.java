@@ -36,10 +36,34 @@ public class Arrivals implements Iterable<Entity>, Comparator<Entity>{
        
     }
     
-    public void processArrival(){
+    public int getSerial(){
         if(!arrivals.isEmpty()){
-            arrivals.remove(0);
+            return arrivals.get(0).getSerial();
         }
+        else{
+            return 0;
+        }
+    }
+    
+    public Entity processArrival(){
+        if(!arrivals.isEmpty()){
+            Entity arrival = arrivals.get(0);
+            arrivals.remove(0);
+            return arrival;
+        }
+        else{
+            return null;
+        }
+    }
+    
+    public int getServiceTime(){
+        if(!arrivals.isEmpty()){
+            return arrivals.get(0).getService();
+        }
+        else{
+            return 0;
+        }
+        
     }
     
     public Iterator<Entity> iterator(){

@@ -30,7 +30,9 @@ public class Queue {
     }
     
     public void process(){
-        queue.remove(0);
+        if(!queue.isEmpty()){
+            queue.remove(0);
+        } 
     }
     
     public boolean isEmpty(){
@@ -47,7 +49,13 @@ public class Queue {
     }
     
     public int getNextEOS(){
-        return queue.get(0).getService();
+        if(!queue.isEmpty()){
+            return queue.get(0).getService();
+        }
+        else{
+            return 0;
+        }
+        
     }
     
     //public int timeAt(int i){
