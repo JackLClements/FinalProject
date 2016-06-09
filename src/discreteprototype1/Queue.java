@@ -26,7 +26,12 @@ public class Queue {
     }
     
     public Entity getHead(){
-        return queue.get(0);
+        if(!queue.isEmpty()){
+            return queue.get(0);
+        }
+        else{
+            return new Entity("Queue Empty");
+        }
     }
     
     public void process(){

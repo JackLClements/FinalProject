@@ -45,6 +45,15 @@ public class Arrivals implements Iterable<Entity>, Comparator<Entity>{
         }
     }
     
+    public String getName(){
+        if(!arrivals.isEmpty()){
+            return arrivals.get(0).getName();
+        }
+        else{
+            return "Arrivals Empty";
+        }
+    }
+    
     public Entity processArrival(){
         if(!arrivals.isEmpty()){
             Entity arrival = arrivals.get(0);

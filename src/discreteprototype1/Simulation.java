@@ -86,20 +86,24 @@ public class Simulation {
                 if(queue.isEmpty()){
                     nextEOS = worldClock + arrivals.getServiceTime();
                 }
-                System.out.println("ARRIVAL EVENT " + arrivals.getSerial() + " at " + worldClock);
+                System.out.println("ARRIVAL EVENT " + arrivals.getName() + " " + arrivals.getSerial() + " at " + worldClock);
                 queue.addEntity(arrivals.processArrival());
             } else if ((nextEOS < nextArrival) || ((nextArrival == 0) && (nextEOS > 0))) { //eos event
                 //System.out.println(nextEOS + " IS LESS THAN " + nextArrival + " THUS EOS");
-                worldClock = nextEOS;
+                worldClock = nextEOS; 
+                if(queue.getHead().getName().equals("Queue Empty")){
+                    worldClock = Integer.MAX_VALUE;
+                }
+                else{
+                    System.out.println("EOS EVENT BY " + queue.getHead().getName() + " " + queue.getHead().getSerial() + " at " + worldClock); //whats the code for this tho
+                }
                 queue.process();
                 if(queue.getNextEOS() == 0){
                     nextEOS = worldClock + arrivals.getServiceTime();
                 }
                 else{
                     nextEOS = worldClock + queue.getNextEOS();
-                }  
-                System.out.println("EOS EVENT BY " + arrivals.getSerial() + " at " + worldClock);
-                
+                }         
             }
             nextArrival = arrivals.nextArrival();
             //System.out.println("WORLD CLOCK " + worldClock);

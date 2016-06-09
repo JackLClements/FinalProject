@@ -21,7 +21,7 @@ public class Entity implements Comparable<Entity>{
     Resource dest;
     
     public Entity(String name){
-        this.name = name + " " + serial;
+        this.name = name;
         serial++;
         thisSerial = serial;
         arrival = new Activity();
@@ -31,7 +31,7 @@ public class Entity implements Comparable<Entity>{
     }
     
     public Entity(String name, Activity arrival, Activity serviceTime, Activity timeout){
-        this.name = name + " " + serial;
+        this.name = name;
         serial++;
         thisSerial = serial;
         this.arrival = arrival;
@@ -97,6 +97,10 @@ public class Entity implements Comparable<Entity>{
     
     public int getSerial(){
         return thisSerial;
+    }
+    
+    public String getName(){
+        return name;
     }
 
     @Override
